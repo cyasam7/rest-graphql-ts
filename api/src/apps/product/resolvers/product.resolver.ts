@@ -1,37 +1,17 @@
 import { Resolver, Query, Mutation, Arg, Field, InputType, Int } from "type-graphql";
-import { Inject, Service } from "typedi";
+import Container, { Inject, Service } from "typedi";
+import { InjectManager } from "typeorm-typedi-extensions";
 
 import { Product } from "../entity/product.entity";
+import { ProductCreateInput, ProductUpdateInput } from "../input/product.inputs";
 import { ProductService } from "../services/product.services";
 
-@InputType()
-export class ProductCreateInput {
-    @Field(() => String)
-    name!: string;
-
-    @Field(() => Int)
-    quantity!: number;
-
-    @Field(() => Int)
-    user!: number;
-}
-
-@InputType()
-export class ProductUpdateInput {
-    @Field()
-    name?: string;
-
-    @Field()
-    quantity?: number;
-
-    @Field(() => Int)
-    user?: number;
-}
-
 @Service()
-@Resolver((of) => Product)
+@Resolver()
 export class ProductResolver {
     constructor(@Inject() private readonly ServicesProduct: ProductService) {}
+
+    /*     ServicesProduct = Container.get(ProductService); */
 
     @Query(() => [Product])
     async products() {

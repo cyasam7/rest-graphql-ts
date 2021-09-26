@@ -1,9 +1,9 @@
-import Container from "typedi";
 import { createConnection, useContainer } from "typeorm";
 import { entities } from "../apps";
-
+import { Container } from "typeorm-typedi-extensions";
 export async function connect() {
     try {
+        useContainer(Container);
         await createConnection({
             type: "mysql",
             host: "localhost",
@@ -14,7 +14,6 @@ export async function connect() {
             entities,
             synchronize: true,
         });
-        useContainer(Container);
 
         console.log("Database connected");
     } catch (error) {

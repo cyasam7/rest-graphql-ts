@@ -1,13 +1,15 @@
 import { Inject, Service } from "typedi";
 import { Repository } from "typeorm";
-import { Product, ProductCreateInput, ProductUpdateInput } from "..";
+import { InjectRepository } from "typeorm-typedi-extensions";
+import { Product } from "..";
 import { Users } from "../../auth";
+import { ProductCreateInput, ProductUpdateInput } from "../input/product.inputs";
 
 @Service()
 export class ProductService {
     constructor(
-        @Inject() private readonly products: Repository<Product>,
-        @Inject() private readonly users: Repository<Users>
+        @InjectRepository(Product) private readonly products: Repository<Product>,
+        @InjectRepository(Users) private readonly users: Repository<Users>
     ) {}
 
     async getProducts(): Promise<Product[]> {
