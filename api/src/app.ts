@@ -5,7 +5,6 @@ import { context, authChecker } from "./utils";
 import { UserResolvers } from "./apps/auth";
 import { ProductResolver } from "./apps/product";
 import Container from "typedi";
-import { useContainer } from "typeorm";
 
 export async function startServer() {
     const app = express();

@@ -19,6 +19,7 @@ interface Context {
 export const context = ({ req, res }: Context) => {
     const headerAuthorization = req.headers.authorization;
     const token = headerAuthorization?.replace("Bearer ", "");
+
     return {
         token,
         req,
@@ -27,13 +28,15 @@ export const context = ({ req, res }: Context) => {
 };
 
 export const authChecker: AuthChecker<Context> = ({ context: { token } }, roles) => {
+    /* if (!roles.length) return token !== undefined; */
+
     if (!token) return false;
 
     const user: any = jwt.verify(token, config.secret);
 
     if (!user) return false;
 
-    if (!user.isConfirmed) return false;
+    /* if (!user.isConfirmed) return false; */
 
     if (roles.includes(user.rol)) return true;
 
