@@ -20,6 +20,15 @@ export class Users extends BaseEntity {
     @Column({ type: "varchar", length: 50, nullable: false })
     password!: string;
 
+    @Column({ type: "varchar", nullable: false, default: "" })
+    accessToken!: string;
+
+    @Column({ type: "varchar", nullable: false, default: "" })
+    refreshToken!: string;
+
+    @Column({ type: "varchar", nullable: false, default: "" })
+    jwtid!: string;
+
     @Field(() => String)
     @Column({ type: "varchar", length: 50, nullable: false })
     rol!: string;

@@ -10,13 +10,11 @@ import { ProductService } from "../services/product.services";
 export class ProductResolver {
     constructor(@Inject() private readonly ServicesProduct: ProductService) {}
 
-    @Authorized()
     @Query(() => [Product])
     async products() {
         return await this.ServicesProduct.getProducts();
     }
 
-    @Authorized()
     @Mutation(() => Product)
     async getProductById(@Arg("id", () => Int) id: number) {
         return await this.ServicesProduct.getProductById(id);
