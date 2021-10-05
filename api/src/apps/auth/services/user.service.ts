@@ -33,7 +33,7 @@ export class UserServices {
             email: myUser.email,
         };
 
-        const token = jwt.sign(payload, config.secret, {
+        const token = jwt.sign(payload, config.auth.secret, {
             expiresIn: "15m",
         });
         return { token };

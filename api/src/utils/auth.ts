@@ -32,7 +32,7 @@ export const authChecker: AuthChecker<Context> = ({ context: { token } }, roles)
 
     if (!token) return false;
 
-    const user: any = jwt.verify(token, config.secret);
+    const user: any = jwt.verify(token, config.auth.secret);
 
     if (!user) return false;
 

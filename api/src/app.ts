@@ -1,23 +1,13 @@
-import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { buildSchemaSync } from "type-graphql";
-import { context, authChecker } from "./utils";
-import { UserResolvers } from "./apps/auth";
-import { ProductResolver } from "./apps/product";
-import Container from "typedi";
+import { startServerGraphql } from "./servers/grapqhl";
+import { startServerRest } from "./servers/rest";
+import { connectTypeOrm } from "./config/typeorm";
+import { config } from "./config/enviroment";
+import { Application } from "express";
 
-export async function startServer() {
-    const app = express();
-
-    const server = new ApolloServer({
-        schema: buildSchemaSync({
-            resolvers: [UserResolvers, ProductResolver],
-            authChecker,
-            container: Container,
-        }),
-        context,
-    });
-    await server.start();
-    server.applyMiddleware({ app, path: "/graphql" });
+export async function startServer(): Promise<Application> {
+    let app;
+    const isApiRest = config.server.is_api_rest;
+    await connectTypeOrm();
+    isApiRest ? (app = startServerRest()) : (app = startServerGraphql());
     return app;
 }
