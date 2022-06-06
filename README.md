@@ -1,2 +1,2 @@
-# react-graphql-ts
-Application example with react, graphql and typescript
+# rest-graphql-ts
+Template application to work with rest or graphql it depends of the enviroment variables
